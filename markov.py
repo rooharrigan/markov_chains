@@ -9,43 +9,38 @@ def open_and_read_file(file_path):
     the file's contents as one string of text.
     """
 
-    # your code goes here
     text_string = open(file_path).read()
     return text_string
 
 
 def make_chains(text_string):
-    """Takes input text as string; returns dictionary of markov chains.
-
-    A chain will be a key that consists of a tuple of (word1, word2)
-    and the value would be a list of the word(s) that follow those two
-    words in the input text.
-
-    For example:
-
-        >>> make_chains("hi there mary hi there juanita")
-        {('hi', 'there'): ['mary', 'juanita'], ('there', 'mary'): ['hi'], ('mary', 'hi': ['there']}
-    """
-
+    """Takes input as text string, returns dictionary or Markov chains"""
     chains = {}
-    n = int(raw_input("How long do you want your Markov chain keys to be?: "))
-
+    n = int(raw_input("Length of Markov chains: "))
+    
+    #Split out the text string into a list of words
     words = text_string.split()
-    for index in range(len(words)-2):
-        # key = []
-        # for i in range(n):
-        #     key.append(words[i])
-        # print key
-        # break
 
-        key = (words[index], words[index+1])
-        word = words[index+2]
-        if key in chains:
-            chains[key].append(word)
+    #Make a key out of the text string that is n letters long
+    i = 0
+
+    while i < len(words) - (n+1):
+        print words
+        key = words[i:n+i]
+        print key
+        value = words[i+n]
+        print value
+        key = tuple(key)
+
+    #check is the key is in the dictionary, or put it in
+        if key not in chains:
+            chains[key] = []
+            chains[key].append(value)
         else:
-            chains[key] = [word]
-
-    return chains
+            chains[key].append(value)
+        i += 1
+        print i
+    print chains
 
 
 def make_text(chains):
@@ -70,7 +65,7 @@ input_text = open_and_read_file(file_path)
 # Get a Markov chain
 chains = make_chains(input_text)
 
-# Produce random text
-random_text = make_text(chains)
+# # Produce random text
+# random_text = make_text(chains)
 
-print random_text
+# print random_text
